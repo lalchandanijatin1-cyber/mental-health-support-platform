@@ -1,0 +1,155 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Titans - Chat Support</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f8ff;
+    }
+
+    header {
+      background-color: #4CB8B3;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      color: white;
+      margin: 0;
+    }
+
+    nav a {
+      margin-left: 1.5rem;
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .chat-container {
+      width: 80%;
+      margin: 2rem auto;
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .message {
+      margin: 0.5rem 0;
+      padding: 0.75rem;
+      border-radius: 10px;
+      max-width: 60%;
+    }
+
+    .left {
+      background: #eee;
+    }
+
+    .right {
+      background: #4CB8B3;
+      color: white;
+      margin-left: auto;
+    }
+
+    .input-area {
+      display: flex;
+      margin-top: 1rem;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 5px 0 0 5px;
+    }
+
+    .input-area button {
+      padding: 0.75rem 1rem;
+      background: #4CB8B3;
+      color: white;
+      border: none;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+    }
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Team Titans</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="chat.html">Chat</a>
+    <a href="mood.html">Mood Check-In</a>
+    <a href="selfhelp.html">Self-Help</a>
+  </nav>
+</header>
+
+<div class="chat-container" id="chatBox">
+  <div class="message left">Hello! I'm here to support you. How are you feeling today?</div>
+</div>
+
+<div class="input-area">
+  <input type="text" id="userInput" placeholder="Type a message...">
+  <button onclick="sendMessage()">➤</button>
+</div>
+
+<script>
+  function sendMessage() {
+    let input = document.getElementById("userInput");
+    let text = input.value.trim();
+    if (text === "") return;
+
+    // Add user message
+    addMessage(text, "right");
+    input.value = "";
+
+    // AI reply after delay
+    setTimeout(() => {
+      let reply = generateReply(text);
+      addMessage(reply, "left");
+    }, 600);
+  }
+
+  function addMessage(text, side) {
+    let chatBox = document.getElementById("chatBox");
+    let msg = document.createElement("div");
+    msg.className = "message " + side;
+    msg.innerText = text;
+    chatBox.appendChild(msg);
+    chatBox.scrollTop = chatBox.scrollHeight;
+  }
+
+  function generateReply(userText) {
+    userText = userText.toLowerCase();
+
+    if (userText.includes("sad") || userText.includes("down")) {
+      return "I'm really sorry you're feeling this way. Want to talk about what's bothering you?";
+    }
+
+    if (userText.includes("stress") || userText.includes("tired")) {
+      return "It sounds like you're overwhelmed. Taking a short break or deep breath might help.";
+    }
+
+    if (userText.includes("happy")) {
+      return "That's wonderful to hear! What made you feel happy today?";
+    }
+
+    if (userText.includes("angry")) {
+      return "Anger can be tough to handle. Do you want to share what triggered it?";
+    }
+
+    return "I understand. Tell me more about what's on your mind.";
+  }
+</script>
+
+</body>
+</html>
