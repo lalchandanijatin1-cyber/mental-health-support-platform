@@ -6,154 +6,202 @@
   <title>TECH Titans - Mental Health Support</title>
 
   <style>
+    /* =========================================
+       HOMEPAGE STYLES (Rain, Layout, Content)
+    ========================================= */
+
+    /* FANCY RAIN ANIMATION KEYFRAMES */
+    @keyframes rain-front { 0% { background-position: 0 0; } 100% { background-position: 100px 300px; } }
+    @keyframes rain-mid { 0% { background-position: 0 0; } 100% { background-position: 50px 200px; } }
+    @keyframes rain-back { 0% { background-position: 0 0; } 100% { background-position: 20px 100px; } }
+
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
-      background-color: #f0f8ff;
+      background-color: #1f3747; 
       color: #333;
+      min-height: 100vh;
+      position: relative;
+      overflow-x: hidden;
     }
 
-    header {
-      background-color: #4CB8B3;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
+    /* FANCY RAIN PSEUDO-ELEMENT */
+    body::before {
+      content: '';
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      z-index: -1; 
+      
+      background-image: 
+        repeating-linear-gradient(190deg, rgba(255, 255, 255, 0.4) 0px, transparent 2px, transparent 15px, rgba(255, 255, 255, 0.4) 17px),
+        repeating-linear-gradient(185deg, rgba(255, 255, 255, 0.2) 0px, transparent 1px, transparent 10px, rgba(255, 255, 255, 0.2) 11px),
+        repeating-linear-gradient(175deg, rgba(255, 255, 255, 0.1) 0px, transparent 0.5px, transparent 5px, rgba(255, 255, 255, 0.1) 6px);
+      
+      background-size: 150px 400px, 100px 300px, 50px 150px;
+
+      animation: 
+        rain-front 1s linear infinite,
+        rain-mid 3s linear infinite,
+        rain-back 7s linear infinite;
     }
 
-    header h1 {
-      color: white;
-      margin: 0;
+    /* Standard Layout and Component Styles */
+    header { background-color: rgba(76, 184, 179, 0.9); padding: 1rem 2rem; display: flex; justify-content: space-between; align-items: center; position: relative; z-index: 10; box-shadow: 0 2px 10px rgba(0,0,0,0.3); }
+    header h1 { color: white; margin: 0; }
+    nav a { margin-left: 1.5rem; color: white; text-decoration: none; font-weight: 500; }
+
+    .hero { display: flex; justify-content: space-between; align-items: center; padding: 5rem 2rem; background-color: rgba(255, 255, 255, 0.7); position: relative; z-index: 1; color: #1f3747; }
+    .hero-text { max-width: 55%; }
+    .hero-text h2 { font-size: 2.5rem; margin-bottom: 1rem; }
+    .hero-text p { font-size: 1.2rem; margin-bottom: 2rem; }
+
+    .hero-text button { background-color: #4CB8B3; color: white; border: none; padding: 0.8rem 1.8rem; font-size: 1.1rem; border-radius: 50px; cursor: pointer; transition: background-color 0.3s; }
+    .hero-text button:hover { background-color: #3aa39d; }
+
+    .features { display: flex; justify-content: space-around; padding: 3rem 2rem; background-color: rgba(255, 255, 255, 0.8); position: relative; z-index: 1; }
+    .card { background-color: #ffffff; padding: 1.5rem; border-radius: 10px; box-shadow: 0 4px 15px rgba(0,0,0,0.15); width: 30%; text-align: center; }
+    .card h3 { margin-bottom: 0.5rem; color: #4CB8B3; }
+
+    .quote-section { margin: 3rem auto; width: 70%; text-align: center; padding: 3rem; background-color: rgba(76, 184, 179, 0.85); color: white; border-radius: 15px; box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2); position: relative; z-index: 1; }
+    .quote-section p { font-size: 1.8rem; font-style: italic; margin: 0; line-height: 1.5; }
+    .quote-section span { display: block; margin-top: 1rem; font-size: 1.2rem; font-weight: 500; }
+
+    footer { text-align: center; padding: 1.5rem; font-size: 0.9rem; color: white; background-color: rgba(31, 55, 71, 0.9); position: relative; z-index: 1; }
+
+    /* =========================================
+       CHATBOT WIDGET CSS (Merged)
+    ========================================= */
+
+    :root{
+        --bg:#f6fbff; --card:#ffffff; --accent:#7cc7ff; --accent-strong:#4bb3ff;
+        --muted:#6b7c8f; --bubble-user:#e6f8ff; --bubble-bot:#f0f6fb;
+        --shadow: 0 10px 30px rgba(15,23,42,0.12); --glass: rgba(255,255,255,0.7);
+        --accent-soft: rgba(75,179,255,0.12);
+        font-family: Inter, ui-sans-serif, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
     }
 
-    nav a {
-      margin-left: 1.5rem;
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .hero {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      padding: 3rem 2rem;
-      background-color: #e6f7f7;
-    }
-
-    .hero-text {
-      max-width: 50%;
-    }
-
-    .hero-text h2 {
-      font-size: 2rem;
-      margin-bottom: 1rem;
-    }
-
-    .hero-text p {
-      font-size: 1.1rem;
-      margin-bottom: 1.5rem;
-    }
-
-    .gender-select {
-      margin-bottom: 1.5rem;
-    }
-
-    .gender-select button {
-      background-color: #4CB8B3;
-      color: white;
+    .mh-chat { position: fixed; bottom: 24px; right: 24px; z-index: 99999; width: 360px; max-width: calc(100vw - 48px); font-size: 14px; }
+    
+    /* MODIFIED: FAB for Custom Icon */
+    .mh-fab{
+      position: absolute; right: 0; bottom: 0; 
+      /* Increased size to fit dots and cloud */
+      width: 140px; 
+      height: 60px; 
+      border-radius: 10px; /* Changed shape */
       border: none;
-      padding: 0.6rem 1.2rem;
-      margin-right: 1rem;
-      font-size: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
+      background: transparent; /* Changed background */
+      color: white; display:flex;
+      align-items:center; justify-content:flex-end; /* Align elements */
+      cursor:pointer; 
+      box-shadow: none;
+      transition: transform 220ms cubic-bezier(.2,.9,.2,1); 
+    }
+    .mh-fab:active{ transform: scale(.98); }
+
+    /* NEW: Cloud/Thought Bubble Styles */
+    .mh-cloud {
+        background: #fff;
+        color: #1f3747;
+        padding: 8px 12px;
+        border-radius: 20px;
+        font-weight: 600;
+        font-size: 14px;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+        position: absolute;
+        right: 48px;
+        top: 0;
+    }
+    .mh-cloud::after {
+        content: '';
+        position: absolute;
+        bottom: -5px;
+        right: 15px;
+        width: 10px;
+        height: 10px;
+        background: #fff;
+        border-radius: 50%;
+        box-shadow: 0 4px 12px rgba(0,0,0,0.1);
     }
 
-    .hero-text button {
-      background-color: #4CB8B3;
-      color: white;
-      border: none;
-      padding: 0.75rem 1.5rem;
-      font-size: 1rem;
-      border-radius: 5px;
-      cursor: pointer;
+    /* NEW: Dot Indicator Styles */
+    .mh-dot-indicator {
+        position: absolute;
+        display: flex;
+        gap: 2px;
+        bottom: 8px;
+        right: 18px;
+    }
+    .mh-dot-indicator div {
+        width: 6px;
+        height: 6px;
+        background: white;
+        border-radius: 50%;
+        opacity: 0.8;
+        animation: pulse 1s infinite alternate;
+    }
+    .mh-dot-indicator div:nth-child(2) { animation-delay: 0.1s; }
+    .mh-dot-indicator div:nth-child(3) { animation-delay: 0.2s; }
+    .mh-dot-indicator div:nth-child(4) { animation-delay: 0.3s; }
+    .mh-dot-indicator div:nth-child(5) { animation-delay: 0.4s; }
+
+    @keyframes pulse {
+        0% { transform: scale(1); opacity: 0.5; }
+        100% { transform: scale(1.2); opacity: 1; }
+    }
+    /* End of Custom Icon Styles */
+
+
+    .mh-window{
+      width: 100%; background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,255,255,0.98));
+      border-radius: 14px; box-shadow: var(--shadow); overflow: hidden; transform-origin: bottom right;
+      transform: translateY(18px) scale(.98); opacity: 0; pointer-events: none;
+      transition: transform 260ms cubic-bezier(.2,.9,.2,1), opacity 260ms ease; display: flex;
+      flex-direction: column; border: 1px solid rgba(11,37,64,0.04);
     }
 
-    .features {
-      display: flex;
-      justify-content: space-around;
-      padding: 2rem;
-      background-color: #fff;
-    }
+    .mh-chat.open .mh-window{ transform: translateY(0) scale(1); opacity: 1; pointer-events: auto; }
 
-    .card {
-      background-color: #f9f9f9;
-      padding: 1.5rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-      width: 30%;
-      text-align: center;
-    }
+    .mh-header{ display:flex; align-items:center; justify-content:space-between; padding:14px 14px; border-bottom: 1px solid rgba(11,37,64,0.04); background: linear-gradient(90deg, rgba(124,199,255,0.06), rgba(111,197,255,0.02)); }
+    .mh-header-left{ display:flex; gap:12px; align-items:center; }
+    .mh-avatar{ width:44px; height:44px; border-radius:10px; display:flex; align-items:center; justify-content:center; background: linear-gradient(135deg,var(--accent-strong), #8fd7ff); color: white; font-weight:700; box-shadow: 0 6px 18px rgba(75,179,255,0.12); }
+    .mh-title{ font-weight:700; color: #072033; font-size:15px; }
+    .mh-sub{ font-size:12px; color: var(--muted); margin-top:2px; }
+    .mh-close{ background: transparent; border:none; color: var(--muted); font-size:16px; cursor:pointer; padding:6px; }
 
-    .card h3 {
-      margin-bottom: 0.5rem;
-    }
+    .mh-body{ padding:12px; height: 330px; overflow-y: auto; display:flex; flex-direction:column; gap:10px; background: linear-gradient(180deg, rgba(250,255,255,1), rgba(247,252,255,1)); }
+    .mh-system-message{ align-self:center; background: var(--accent-soft); color: #053b4a; padding:8px 12px; border-radius:12px; font-size:13px; text-align:center; max-width:86%; }
 
-    .chat-box {
-      margin: 2rem auto;
-      width: 80%;
-      background-color: #fff;
-      border-radius: 10px;
-      padding: 1rem;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
+    .mh-suggestions{ display:flex; flex-wrap:wrap; gap:8px; margin-top:4px; }
+    .mh-suggestion{ background: transparent; border: 1px solid rgba(75,179,255,0.18); color: #074b5f; padding:8px 10px; border-radius:999px; cursor:pointer; font-size:13px; transition: transform 120ms ease, background 120ms ease; }
+    .mh-suggestion:hover{ transform: translateY(-3px); background: rgba(75,179,255,0.06); }
 
-    .message {
-      margin: 0.5rem 0;
-      padding: 0.75rem;
-      border-radius: 10px;
-      max-width: 60%;
-    }
+    .mh-row { display:flex; gap:8px; align-items:flex-end; }
+    .mh-row.user { justify-content:flex-end; }
+    .mh-row.bot { justify-content:flex-start; }
 
-    .message.left {
-      background-color: #eee;
-      text-align: left;
-    }
+    .mh-bubble { max-width:78%; padding:12px 14px; border-radius:14px; box-shadow: 0 6px 18px rgba(15,23,42,0.04); line-height:1.35; font-size:14px; white-space:pre-wrap; word-break:break-word; }
+    .mh-bubble.user { background: var(--bubble-user); color: #043049; border-bottom-right-radius:6px; }
+    .mh-bubble.bot { background: var(--bubble-bot); color: #0b3a4a; border-bottom-left-radius:6px; }
 
-    .message.right {
-      background-color: #4CB8B3;
-      color: white;
-      text-align: right;
-      margin-left: auto;
-    }
+    .mh-typing { display:inline-flex; gap:4px; height:18px; align-items:center; }
+    .mh-dot { width:6px; height:6px; border-radius:50%; background:rgba(7,40,60,0.18); animation: dot 1s infinite; }
+    .mh-dot:nth-child(2){ animation-delay:.15s; }
+    .mh-dot:nth-child(3){ animation-delay:.3s; }
+    @keyframes dot { 0%{ opacity:.25; transform: translateY(0) } 50%{ opacity:1; transform: translateY(-4px) } 100%{ opacity:.25; transform: translateY(0) } }
 
-    .input-area {
-      display: flex;
-      margin-top: 1rem;
-    }
+    .mh-input-area{ display:flex; gap:8px; padding:12px; border-top: 1px solid rgba(11,37,64,0.04); background: linear-gradient(180deg, rgba(255,255,255,0.98), rgba(250,255,255,0.98)); }
+    .mh-input{ flex:1; padding:11px 12px; border-radius:12px; border:1px solid rgba(15,23,42,0.06); background: rgba(250,255,255,0.9); outline:none; font-size:14px; color:#072033; }
+    .mh-send{ background: linear-gradient(180deg,var(--accent-strong), var(--accent)); border:none; padding:10px 14px; border-radius:10px; color:white; font-weight:700; cursor:pointer; box-shadow: 0 8px 18px rgba(75,179,255,0.12); }
+    .mh-footer{ padding:10px 12px; border-top:1px solid rgba(11,37,64,0.03); background:transparent; color:var(--muted); font-size:12px; }
 
-    .input-area input {
-      flex: 1;
-      padding: 0.75rem;
-      border: 1px solid #ccc;
-      border-radius: 5px 0 0 5px;
-    }
-
-    .input-area button {
-      padding: 0.75rem 1rem;
-      border: none;
-      background-color: #4CB8B3;
-      color: white;
-      border-radius: 0 5px 5px 0;
-      cursor: pointer;
-    }
-
-    footer {
-      text-align: center;
-      padding: 1rem;
-      font-size: 0.9rem;
-      color: #666;
+    @media (max-width:480px){
+      .mh-chat { right: 12px; left: 12px; width: auto; bottom: 18px; }
+      .mh-window { width: 100%; max-width: 100%; }
+      .mh-body { height: 52vh; }
     }
   </style>
 </head>
@@ -164,8 +212,7 @@
     <h1>Team Titans</h1>
     <nav>
         <a href="webpage.html">Home</a>
-        <a href="#">Chat</a>
-        <a href="#">Mood Check-In</a>
+        <a href="mood.html">Mood Check-In</a>
         <a href="selfhelp.html">Self-Help</a> 
         </nav>
   </header>
@@ -173,20 +220,13 @@
   <section class="hero">
     <div class="hero-text">
       <h2>Your Mental Health Companion</h2>
-      <p>Get instant emotional support, mood tracking, and self-help tools – anytime, anywhere.</p>
+      <p>Get instant emotional support, mood tracking, and self-help tools – anytime, anywhere. We are here to listen and support you through any storm.</p>
 
-      <!-- ✅ Gender Selection Buttons -->
-      <div class="gender-select">
-        <button>Male</button>
-        <button>Female</button>
-      </div>
-
-      <button>Start Chat</button>
+      <button onclick="openChat()">Start Chat Anonymously</button> 
     </div>
 
     <div class="hero-image">
-      <!-- Add image later -->
-    </div>
+      </div>
   </section>
 
   <section class="features">
@@ -204,19 +244,204 @@
     </div>
   </section>
 
-  <section class="chat-box">
-    <div class="message left">Hello! How are you feeling today?</div>
-    <div class="message right">I'm feeling a bit down.</div>
-
-    <div class="input-area">
-      <input type="text" placeholder="Type a message..." />
-      <button>➤</button>
-    </div>
+  <section class="quote-section">
+    <p>
+        "Healing doesn't mean the damage never existed. It means the damage no longer controls your life."
+    </p>
+    <span>— Anonymous</span>
   </section>
 
   <footer>
     Made with ❤️ by Team Titans during a 24-hour hackathon
   </footer>
+
+<div class="mh-chat" id="mhChatWidget" aria-live="polite">
+
+  <button id="mhToggleBtn" class="mh-fab" aria-label="Open mental health chat" onclick="openChat()">
+    <div class="mh-cloud">Questions?</div>
+    <div class="mh-dot-indicator">
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+        <div></div>
+    </div>
+  </button>
+
+  <div class="mh-window" id="mhWindow" role="dialog" aria-hidden="true">
+    <div class="mh-header">
+      <div class="mh-header-left">
+        <div class="mh-avatar">MH</div>
+        <div>
+          <div class="mh-title">Wellness Assistant</div>
+          <div class="mh-sub">Here to support your well-being</div>
+        </div>
+      </div>
+      <button id="mhCloseBtn" class="mh-close" onclick="closeChat()">✕</button>
+    </div>
+
+    <div class="mh-body" id="mhMessages">
+      <div class="mh-system-message">Hi — I'm a mental health assistant. Ask a question or select a suggestion below.</div>
+      <div class="mh-suggestions" id="mhSuggestions"></div>
+    </div>
+
+    <form id="mhForm" class="mh-input-area" onsubmit="return false;">
+      <input id="mhInput" class="mh-input" type="text" placeholder="Type a message..." />
+      <button id="mhSendBtn" class="mh-send">Send</button>
+    </form>
+
+    <div class="mh-footer">
+      <small>Not an emergency service. If you are in danger, contact local emergency services.</small>
+    </div>
+  </div>
+</div>
+
+<script>
+  // Global variable setup for chat functions
+  const root = document.getElementById('mhChatWidget');
+  const windowEl = document.getElementById('mhWindow');
+  const input = document.getElementById('mhInput');
+  const messagesEl = document.getElementById('mhMessages');
+  const suggestionsWrap = document.getElementById('mhSuggestions');
+  
+  // Exposing open/close functions globally (essential for HTML onclick)
+  function openChat() {
+    root.classList.add('open');
+    windowEl.setAttribute('aria-hidden', 'false');
+    // Ensure input focus after the chat window animation completes
+    setTimeout(() => input.focus(), 260); 
+  }
+
+  function closeChat() {
+    root.classList.remove('open');
+    windowEl.setAttribute('aria-hidden', 'true');
+  }
+
+  // The rest of the chatbot logic (FAQ list, message sending, etc.)
+  (() => {
+    
+    const toggleBtn = document.getElementById('mhToggleBtn');
+    const form = document.getElementById('mhForm');
+    const sendBtn = document.getElementById('mhSendBtn');
+
+    const QA_LIST = [
+      { q: "what is mental health?", a: "Mental health refers to emotional, psychological, and social well-being." },
+      { q: "what are common signs of stress?", a: "Headaches, irritability, trouble sleeping, and difficulty concentrating." },
+      { q: "how can i reduce stress?", a: "Try breathing exercises, short walks, breaks, or journaling." },
+      { q: "what is anxiety?", a: "Anxiety is a natural response to stress involving worry or tension." },
+      { q: "how can i calm anxiety?", a: "Slow breathing, grounding techniques, or stretching may help." },
+      { q: "what is depression?", a: "Depression is a persistent feeling of sadness or loss of interest." },
+      { q: "how can i improve my mood?", a: "Light exercise, talking to friends, and healthy routines often help." },
+      { q: "what is mindfulness?", a: "Mindfulness means focusing on the present moment without judgment." },
+      { q: "how do i practice mindfulness?", a: "Focus on breathing or your senses for a few minutes." },
+      { q: "how important is sleep for mental health?", a: "Good sleep supports mood, energy, and focus." }
+    ];
+
+    const CRISIS_KEYWORDS = [
+      "hurt myself", "kill myself", "suicide", "i want to die",
+      "i want to end my life", "i will kill myself", "self-harm"
+    ];
+
+    const FALLBACK_MSG = "I'm here to help with general well-being questions. Please choose one from the FAQ.";
+    const EMERGENCY_MSG = "It sounds like you're going through something overwhelming. I cannot help in emergencies, please contact your local emergency number immediately.";
+
+    function normalize(t) { return t.toLowerCase().trim().replace(/[^\w\s]/g, '').replace(/\s+/g, ' '); }
+    function containsCrisis(n) { return CRISIS_KEYWORDS.some(k => n.includes(normalize(k))); }
+    function findAnswer(n) { return QA_LIST.find(item => normalize(item.q) === n)?.a || null; }
+
+    function createMessage(text, from='bot') {
+      const row = document.createElement('div');
+      row.className = 'mh-row ' + (from === 'user' ? 'user' : 'bot');
+      const bubble = document.createElement('div');
+      bubble.className = 'mh-bubble ' + (from === 'user' ? 'user' : 'bot');
+      bubble.textContent = text;
+      row.appendChild(bubble);
+      return row;
+    }
+
+    function createTyping() {
+      const row = document.createElement('div');
+      row.className = 'mh-row bot';
+      const bubble = document.createElement('div');
+      bubble.className = 'mh-bubble bot';
+      const typing = document.createElement('span');
+      typing.className = 'mh-typing';
+      typing.innerHTML = '<span class="mh-dot"></span><span class="mh-dot"></span><span class="mh-dot"></span>';
+      bubble.appendChild(typing);
+      row.appendChild(bubble);
+      return row;
+    }
+
+    function scrollBottom() { messagesEl.scrollTop = messagesEl.scrollHeight + 100; }
+
+    function botReply(text) {
+      const typing = createTyping();
+      messagesEl.appendChild(typing);
+      scrollBottom();
+
+      setTimeout(() => {
+        typing.remove();
+        messagesEl.appendChild(createMessage(text, 'bot'));
+        scrollBottom();
+      }, 600);
+    }
+
+    function buildSuggestions() {
+      suggestionsWrap.innerHTML = '';
+      QA_LIST.slice(0,6).forEach(item => {
+        const b = document.createElement('button');
+        b.className = 'mh-suggestion';
+        b.textContent = item.q;
+        b.onclick = () => {
+          input.value = item.q;
+          sendMessage(item.q);
+        };
+        suggestionsWrap.appendChild(b);
+      });
+    }
+
+    function sendMessage(msgText) {
+      const text = (msgText || input.value).trim();
+      if (!text) return;
+
+      messagesEl.appendChild(createMessage(text, 'user'));
+      scrollBottom();
+      if (!msgText) input.value = '';
+
+      const norm = normalize(text);
+
+      if (containsCrisis(norm)) return botReply(EMERGENCY_MSG);
+
+      const ans = findAnswer(norm);
+      if (ans) return botReply(ans);
+
+      botReply(FALLBACK_MSG);
+    }
+
+    // Event Listeners for Chatbot Controls
+    toggleBtn.onclick = () => root.classList.contains('open') ? closeChat() : openChat();
+    
+    sendBtn.onclick = () => sendMessage();
+    form.onsubmit = (e) => {
+      e.preventDefault();
+      sendMessage();
+    };
+    input.onkeydown = (e) => {
+      if (e.key === "Enter" && !e.shiftKey) {
+        e.preventDefault();
+        sendMessage();
+      }
+    };
+
+    document.addEventListener('click', (e) => {
+      if (!root.contains(e.target) && root.classList.contains('open')) closeChat();
+    });
+
+    buildSuggestions();
+    closeChat();
+
+  })();
+</script>
 
 </body>
 </html>
