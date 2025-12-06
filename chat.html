@@ -1,155 +1,517 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Team Titans - Chat Support</title>
-
-  <style>
-    body {
-      margin: 0;
-      font-family: 'Segoe UI', sans-serif;
-      background-color: #f0f8ff;
-    }
-
-    header {
-      background-color: #4CB8B3;
-      padding: 1rem 2rem;
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-    }
-
-    header h1 {
-      color: white;
-      margin: 0;
-    }
-
-    nav a {
-      margin-left: 1.5rem;
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-    }
-
-    .chat-container {
-      width: 80%;
-      margin: 2rem auto;
-      background: white;
-      padding: 1rem;
-      border-radius: 10px;
-      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-    }
-
-    .message {
-      margin: 0.5rem 0;
-      padding: 0.75rem;
-      border-radius: 10px;
-      max-width: 60%;
-    }
-
-    .left {
-      background: #eee;
-    }
-
-    .right {
-      background: #4CB8B3;
-      color: white;
-      margin-left: auto;
-    }
-
-    .input-area {
-      display: flex;
-      margin-top: 1rem;
-    }
-
-    .input-area input {
-      flex: 1;
-      padding: 0.75rem;
-      border: 1px solid #ccc;
-      border-radius: 5px 0 0 5px;
-    }
-
-    .input-area button {
-      padding: 0.75rem 1rem;
-      background: #4CB8B3;
-      color: white;
-      border: none;
-      border-radius: 0 5px 5px 0;
-      cursor: pointer;
-    }
-  </style>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MindHelper - Mental Health Support Bot</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            color: #333;
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 20px;
+            background-color: #4a6fa5;
+            color: white;
+            border-radius: 15px;
+            margin-bottom: 25px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+        }
+        
+        h1 {
+            font-size: 2.5rem;
+            margin-bottom: 10px;
+        }
+        
+        .subtitle {
+            font-size: 1.1rem;
+            opacity: 0.9;
+        }
+        
+        .warning-box {
+            background-color: #fff3cd;
+            border-left: 5px solid #ffc107;
+            padding: 15px;
+            margin-bottom: 25px;
+            border-radius: 8px;
+            color: #856404;
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+        
+        .warning-box i {
+            margin-right: 8px;
+            color: #ff9800;
+        }
+        
+        .chat-container {
+            display: flex;
+            flex-direction: column;
+            height: 65vh;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 25px rgba(0, 0, 0, 0.08);
+            overflow: hidden;
+        }
+        
+        .chat-header {
+            background-color: #5d7db6;
+            color: white;
+            padding: 15px 20px;
+            display: flex;
+            align-items: center;
+        }
+        
+        .chat-header i {
+            font-size: 1.5rem;
+            margin-right: 10px;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            padding: 20px;
+            overflow-y: auto;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        
+        .message {
+            max-width: 80%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            line-height: 1.5;
+            position: relative;
+            animation: fadeIn 0.3s ease-out;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; transform: translateY(10px); }
+            to { opacity: 1; transform: translateY(0); }
+        }
+        
+        .bot-message {
+            align-self: flex-start;
+            background-color: #f0f5ff;
+            border-top-left-radius: 5px;
+            color: #333;
+            border: 1px solid #e1e8ff;
+        }
+        
+        .user-message {
+            align-self: flex-end;
+            background-color: #5d7db6;
+            color: white;
+            border-top-right-radius: 5px;
+        }
+        
+        /* MODIFIED: input-area is now the form */
+        .input-area {
+            display: flex;
+            padding: 20px;
+            background-color: #f9f9f9;
+            border-top: 1px solid #eee;
+        }
+        
+        .input-area input {
+            flex: 1;
+            padding: 15px;
+            border: 2px solid #ddd;
+            border-radius: 30px;
+            font-size: 1rem;
+            outline: none;
+            transition: border 0.3s;
+        }
+        
+        .input-area input:focus {
+            border-color: #5d7db6;
+        }
+        
+        .input-area button {
+            background-color: #5d7db6;
+            color: white;
+            border: none;
+            border-radius: 50%;
+            width: 55px;
+            height: 55px;
+            margin-left: 15px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+        
+        .input-area button:hover {
+            background-color: #4a6fa5;
+        }
+        
+        .input-area button i {
+            font-size: 1.2rem;
+        }
+        
+        .quick-questions {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .quick-questions h3 {
+            margin-bottom: 15px;
+            color: #4a6fa5;
+            display: flex;
+            align-items: center;
+        }
+        
+        .quick-questions h3 i {
+            margin-right: 10px;
+        }
+        
+        .question-buttons {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+        }
+        
+        .question-btn {
+            padding: 10px 18px;
+            background-color: #eef2ff;
+            border: 1px solid #d1dcff;
+            border-radius: 30px;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        
+        .question-btn:hover {
+            background-color: #5d7db6;
+            color: white;
+            transform: translateY(-2px);
+        }
+        
+        .resources {
+            margin-top: 25px;
+            padding: 20px;
+            background-color: white;
+            border-radius: 15px;
+            box-shadow: 0 5px 15px rgba(0, 0, 0, 0.05);
+        }
+        
+        .resources h3 {
+            margin-bottom: 15px;
+            color: #4a6fa5;
+            display: flex;
+            align-items: center;
+        }
+        
+        .resources h3 i {
+            margin-right: 10px;
+        }
+        
+        .resource-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+            gap: 15px;
+        }
+        
+        .resource-item {
+            padding: 15px;
+            background-color: #f9f9f9;
+            border-radius: 10px;
+            border-left: 4px solid #5d7db6;
+        }
+        
+        .resource-item h4 {
+            margin-bottom: 8px;
+            color: #333;
+        }
+        
+        .resource-item p {
+            font-size: 0.9rem;
+            color: #666;
+            margin-bottom: 10px;
+        }
+        
+        .resource-link {
+            color: #5d7db6;
+            text-decoration: none;
+            font-weight: 500;
+            font-size: 0.9rem;
+            display: inline-flex;
+            align-items: center;
+        }
+        
+        .resource-link i {
+            margin-left: 5px;
+            font-size: 0.8rem;
+        }
+        
+        footer {
+            text-align: center;
+            margin-top: 30px;
+            padding: 20px;
+            color: #666;
+            font-size: 0.9rem;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2rem;
+            }
+            
+            .chat-container {
+                height: 55vh;
+            }
+            
+            .resource-list {
+                grid-template-columns: 1fr;
+            }
+            
+            .question-buttons {
+                justify-content: center;
+            }
+        }
+    </style>
 </head>
-
 <body>
+    <div class="container">
+        <header>
+        <a href="webpage.html">Home</a>
+        <a href="chat.html">Home</a>
+        <a href="mood.html">Mood Check-In</a>
+        <a href="selfhelp.html">Self-Help</a>
+            <h1><i class="fas fa-robot"></i> MindHelper</h1>
+            <p class="subtitle">Your AI mental health support assistant</p>
+        </header>
+        
+        <div class="warning-box">
+            <i class="fas fa-exclamation-triangle"></i>
+            <strong>Important Disclaimer:</strong> This bot provides supportive information only and is not a replacement for professional mental health care. If you're in crisis, please contact a mental health professional or emergency services immediately.
+        </div>
+        
+        <div class="chat-container">
+            <div class="chat-header">
+                <i class="fas fa-brain"></i>
+                <h2>Mental Health Support Assistant</h2>
+            </div>
+            
+            <div class="chat-messages" id="chatMessages">
+                <div class="message bot-message">
+                    <p>Hello! I'm MindHelper, your mental health support assistant. I'm here to listen and provide helpful information. How are you feeling today?</p>
+                </div>
+            </div>
+            
+            <form id="chatForm" class="input-area">
+                <input type="text" id="userInput" placeholder="Type your question or concern here..." autocomplete="off">
+                <button type="submit" id="sendButton">
+                    <i class="fas fa-paper-plane"></i>
+                </button>
+            </form>
+            </div>
+        
+        <div class="quick-questions">
+            <h3><i class="fas fa-bolt"></i> Quick Questions</h3>
+            <div class="question-buttons">
+                <button class="question-btn" data-question="How can I deal with anxiety?">Dealing with anxiety</button>
+                <button class="question-btn" data-question="I'm feeling very sad, what can I do?">Feeling sad</button>
+                <button class="question-btn" data-question="How to improve my sleep?">Sleep issues</button>
+                <button class="question-btn" data-question="Tips for stress management">Stress management</button>
+                <button class="question-btn" data-question="How to build self-esteem?">Building self-esteem</button>
+                <button class="question-btn" data-question="Coping with loneliness">Coping with loneliness</button>
+            </div>
+        </div>
+        
+        <div class="resources">
+            <h3><i class="fas fa-life-ring"></i> Mental Health Resources</h3>
+            <div class="resource-list">
+                <div class="resource-item">
+                    <h4>Crisis Text Line</h4>
+                    <p>Text HOME to 741741 for free, 24/7 crisis counseling in the US.</p>
+                    <a href="https://www.crisistextline.org/" target="_blank" class="resource-link">Visit Website <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <div class="resource-item">
+                    <h4>National Suicide Prevention Lifeline</h4>
+                    <p>Call 988 for free, confidential support 24/7 in the United States.</p>
+                    <a href="https://988lifeline.org/" target="_blank" class="resource-link">Visit Website <i class="fas fa-external-link-alt"></i></a>
+                </div>
+                <div class="resource-item">
+                    <h4>Mental Health America</h4>
+                    <p>Resources for mental health conditions and finding help.</p>
+                    <a href="https://www.mhanational.org/" target="_blank" class="resource-link">Visit Website <i class="fas fa-external-link-alt"></i></a>
+                </div>
+            </div>
+        </div>
+        
+        <footer>
+            <p>MindHelper - A hackathon project for mental health support | Not a substitute for professional help</p>
+        </footer>
+    </div>
 
-<header>
-  <h1>Team Titans</h1>
-  <nav>
-    <a href="webpage.html">Home</a>
-    <a href="chat.html">Chat</a>
-    <a href="mood.html">Mood Check-In</a>
-    <a href="selfhelp.html">Self-Help</a>
-  </nav>
-</header>
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            const chatMessages = document.getElementById('chatMessages');
+            const userInput = document.getElementById('userInput');
+            const chatForm = document.getElementById('chatForm'); // NEW: Get the form element
+            const quickQuestionButtons = document.querySelectorAll('.question-btn');
+            
+            // Bot responses based on keywords
+            const botResponses = {
+                'anxiety': [
+                    "For anxiety, try deep breathing exercises: inhale for 4 seconds, hold for 4, exhale for 6. This activates your parasympathetic nervous system.",
+                    "Mindfulness meditation can reduce anxiety. Start with just 5 minutes a day focusing on your breath.",
+                    "Physical exercise is excellent for anxiety. Even a 15-minute walk can reduce anxious feelings.",
+                    "Consider limiting caffeine and alcohol, as they can exacerbate anxiety symptoms.",
+                    "Progressive muscle relaxation can help: tense and relax each muscle group from toes to head."
+                ],
+                'sad': [
+                    "When feeling sad, try connecting with someone you trust. Social support is crucial for emotional wellbeing.",
+                    "Engage in activities you usually enjoy, even if you don't feel like it initially. Action often precedes motivation.",
+                    "Consider keeping a gratitude journal. Writing down 3 things you're grateful for each day can improve mood over time.",
+                    "Sunlight exposure can help regulate mood. Try to spend at least 15 minutes outside daily.",
+                    "If sadness persists for more than two weeks, consider speaking with a mental health professional."
+                ],
+                'sleep': [
+                    "For better sleep, maintain a consistent sleep schedule, even on weekends.",
+                    "Create a relaxing bedtime routine: dim lights, avoid screens an hour before bed, read or listen to calming music.",
+                    "Keep your bedroom cool, dark, and quiet. Consider using white noise if needed.",
+                    "Avoid caffeine after 2 PM and limit alcohol, as it disrupts sleep architecture.",
+                    "If you can't sleep after 20 minutes, get up and do something relaxing until you feel sleepy."
+                ],
+                'stress': [
+                    "For stress management, try the 4-7-8 breathing technique: inhale 4 seconds, hold 7, exhale 8.",
+                    "Physical activity is one of the most effective stress relievers. Aim for 30 minutes most days.",
+                    "Practice time management: prioritize tasks and break large projects into smaller steps.",
+                    "Mindfulness and meditation can reduce stress responses. Try apps like Headspace or Calm.",
+                    "Make time for hobbies and activities you enjoy. Creative outlets are excellent for stress relief."
+                ],
+                'self-esteem': [
+                    "To build self-esteem, challenge negative self-talk. Ask: 'Would I say this to a friend?'",
+                    "Set small, achievable goals and celebrate your accomplishments, no matter how small.",
+                    "Practice self-compassion. Treat yourself with the same kindness you'd offer others.",
+                    "Surround yourself with supportive people who appreciate you for who you are.",
+                    "Focus on your strengths and what you like about yourself. Consider keeping a strengths journal."
+                ],
+                'loneliness': [
+                    "To cope with loneliness, consider joining groups or clubs related to your interests.",
+                    "Volunteering can reduce loneliness while providing a sense of purpose and connection.",
+                    "Pets can provide companionship and reduce feelings of loneliness.",
+                    "Reach out to old friends or family members. Often, others are more receptive than we assume.",
+                    "Consider online communities related to your interests, but balance with in-person connections."
+                ],
+                'default': [
+                    "Thank you for sharing. It's important to acknowledge your feelings.",
+                    "That sounds challenging. Remember that it's okay to not be okay sometimes.",
+                    "I hear you. Taking the first step to talk about this is a sign of strength.",
+                    "Many people experience similar feelings. You're not alone in this.",
+                    "It's brave of you to explore ways to feel better. Consider speaking with a professional for personalized support."
+                ]
+            };
+            
+            // Add a message to the chat
+            function addMessage(message, isUser = false) {
+                const messageDiv = document.createElement('div');
+                messageDiv.className = `message ${isUser ? 'user-message' : 'bot-message'}`;
+                messageDiv.innerHTML = `<p>${message}</p>`;
+                chatMessages.appendChild(messageDiv);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+            }
+            
+            // Get bot response based on user input
+            function getBotResponse(userMessage) {
+                const lowerMessage = userMessage.toLowerCase();
+                
+                // Check for keywords
+                for (const [keyword, responses] of Object.entries(botResponses)) {
+                    if (lowerMessage.includes(keyword)) {
+                        const randomResponse = responses[Math.floor(Math.random() * responses.length)];
+                        return randomResponse;
+                    }
+                }
+                
+                // If no keyword matches, return a default response
+                const defaultResponses = botResponses['default'];
+                return defaultResponses[Math.floor(Math.random() * defaultResponses.length)];
+            }
+            
+            // Send message function
+            function sendMessage(e) {
+                // IMPORTANT: Prevent the form from submitting/refreshing the page
+                e.preventDefault(); 
+                
+                const message = userInput.value.trim();
+                if (message === '') return;
+                
+                // Add user message
+                addMessage(message, true);
+                userInput.value = '';
+                
+                // Show "typing" indicator
+                const typingIndicator = document.createElement('div');
+                typingIndicator.className = 'message bot-message';
+                typingIndicator.id = 'typingIndicator';
+                typingIndicator.innerHTML = '<p><i>MindHelper is thinking...</i></p>';
+                chatMessages.appendChild(typingIndicator);
+                chatMessages.scrollTop = chatMessages.scrollHeight;
+                
+                // Simulate bot thinking time, then respond
+                setTimeout(() => {
+                    // Check if indicator still exists (prevents error if user hits send multiple times quickly)
+                    const indicator = document.getElementById('typingIndicator');
+                    if (indicator) indicator.remove();
+                    
+                    const botResponse = getBotResponse(message);
+                    addMessage(botResponse);
+                    
+                    // Add a follow-up suggestion for certain topics
+                    if (message.includes('anxiety') || message.includes('stress')) {
+                        setTimeout(() => {
+                            addMessage("Would you like some information about breathing exercises or mindfulness techniques?");
+                        }, 1000);
+                    }
+                }, 1500);
+            }
+            
+            // Event listeners
+            // NEW: Listen for the form submission (triggered by Enter key or clicking the submit button)
+            chatForm.addEventListener('submit', sendMessage);
+            
+            // Quick question buttons
+            quickQuestionButtons.forEach(button => {
+                button.addEventListener('click', function() {
+                    const question = this.getAttribute('data-question');
+                    userInput.value = question;
+                    // Trigger form submission programmatically
+                    chatForm.dispatchEvent(new Event('submit')); 
+                });
+            });
+            
+            // Add initial bot message with suggestions
+            setTimeout(() => {
+                addMessage("You can ask me about anxiety, depression, stress, sleep issues, self-esteem, loneliness, or other mental health topics. You can also click the quick questions above.");
+            }, 1000);
 
-<div class="chat-container" id="chatBox">
-  <div class="message left">Hello! I'm here to support you. How are you feeling today?</div>
-</div>
-
-<div class="input-area">
-  <input type="text" id="userInput" placeholder="Type a message...">
-  <button onclick="sendMessage()">➤</button>
-</div>
-
-<script>
-  function sendMessage() {
-    let input = document.getElementById("userInput");
-    let text = input.value.trim();
-    if (text === "") return;
-
-    // Add user message
-    addMessage(text, "right");
-    input.value = "";
-
-    // AI reply after delay
-    setTimeout(() => {
-      let reply = generateReply(text);
-      addMessage(reply, "left");
-    }, 600);
-  }
-
-  function addMessage(text, side) {
-    let chatBox = document.getElementById("chatBox");
-    let msg = document.createElement("div");
-    msg.className = "message " + side;
-    msg.innerText = text;
-    chatBox.appendChild(msg);
-    chatBox.scrollTop = chatBox.scrollHeight;
-  }
-
-  function generateReply(userText) {
-    userText = userText.toLowerCase();
-
-    if (userText.includes("sad") || userText.includes("down")) {
-      return "I'm really sorry you're feeling this way. Want to talk about what's bothering you?";
-    }
-
-    if (userText.includes("stress") || userText.includes("tired")) {
-      return "It sounds like you're overwhelmed. Taking a short break or deep breath might help.";
-    }
-
-    if (userText.includes("happy")) {
-      return "That's wonderful to hear! What made you feel happy today?";
-    }
-
-    if (userText.includes("angry")) {
-      return "Anger can be tough to handle. Do you want to share what triggered it?";
-    }
-
-    return "I understand. Tell me more about what's on your mind.";
-  }
-</script>
-
+            // Set focus to input when the page loads
+            userInput.focus();
+        });
+    </script>
 </body>
 </html>
