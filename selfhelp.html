@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Team Titans - Self Help</title>
+
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #f0f8ff;
+      color: #333;
+    }
+
+    header {
+      background-color: #4CB8B3;
+      padding: 1rem 2rem;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    header h1 {
+      color: white;
+      margin: 0;
+    }
+
+    nav a {
+      margin-left: 1.5rem;
+      color: white;
+      text-decoration: none;
+      font-weight: 500;
+    }
+
+    .container {
+      width: 85%;
+      margin: 2rem auto;
+    }
+
+    .section-title {
+      font-size: 1.8rem;
+      margin-bottom: 1rem;
+      text-align: center;
+    }
+
+    .exercise-box {
+      background: white;
+      padding: 1.5rem;
+      border-radius: 10px;
+      margin-bottom: 1.5rem;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .exercise-box h3 {
+      margin-top: 0;
+      color: #4CB8B3;
+    }
+
+    /* Chat Section */
+    .chat-container {
+      margin-top: 2rem;
+      background: white;
+      padding: 1rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    }
+
+    .chat-title {
+      font-size: 1.5rem;
+      margin-bottom: 1rem;
+      color: #4CB8B3;
+      text-align: center;
+    }
+
+    .message {
+      margin: 0.5rem 0;
+      padding: 0.75rem;
+      border-radius: 10px;
+      max-width: 70%;
+    }
+
+    .left {
+      background: #eee;
+    }
+
+    .right {
+      background: #4CB8B3;
+      color: white;
+      margin-left: auto;
+    }
+
+    .input-area {
+      display: flex;
+      margin-top: 1rem;
+    }
+
+    .input-area input {
+      flex: 1;
+      padding: 0.75rem;
+      border: 1px solid #ccc;
+      border-radius: 5px 0 0 5px;
+    }
+
+    .input-area button {
+      padding: 0.75rem 1rem;
+      background: #4CB8B3;
+      color: white;
+      border: none;
+      border-radius: 0 5px 5px 0;
+      cursor: pointer;
+    }
+
+  </style>
+</head>
+
+<body>
+
+<header>
+  <h1>Team Titans</h1>
+  <nav>
+    <a href="index.html">Home</a>
+    <a href="chat.html">Chat</a>
+    <a href="mood.html">Mood Check-In</a>
+    <a href="selfhelp.html">Self-Help</a>
+  </nav>
+</header>
+
+<div class="container">
+
+  <h2 class="section-title">Self-Help Tools & Exercises</h2>
+
+  <!-- Exercise 1 -->
+  <div class="exercise-box">
+    <h3>🌬️ Deep Breathing Exercise</h3>
+    <p>Inhale for 4 seconds, hold for 4 seconds, exhale for 4 seconds. Repeat 5 times.</p>
+  </div>
+
+  <!-- Exercise 2 -->
+  <div class="exercise-box">
+    <h3>🧘 Grounding Technique (5-4-3-2-1)</h3>
+    <p>Identify 5 things you see, 4 you can touch, 3 you hear, 2 you smell, 1 you taste.</p>
+  </div>
+
+  <!-- Exercise 3 -->
+  <div class="exercise-box">
+    <h3>📓 Quick Journaling</h3>
+    <p>Write down your thoughts freely for 2 minutes. No rules, no judgment.</p>
+  </div>
+
+  <!-- Exercise 4 -->
+  <div class="exercise-box">
+    <h3>💧 Hydration Reminder</h3>
+    <p>Drink a glass of water. Hydration helps reduce stress and improves clarity.</p>
+  </div>
+
+  <!-- Exercise 5 -->
+  <div class="exercise-box">
+    <h3>🎧 Relaxing Music</h3>
+    <p>Listen to calming music or nature sounds for 3–5 minutes.</p>
+  </div>
+
+  <!-- Guided Chat Section -->
+  <div class="chat-container">
+    <h3 class="chat-title">Guided Self-Help Chat</h3>
+
+    <div class="message left">Hi! I'm here to guide you through self-help exercises.</div>
+    <div class="message left">Which area would you like help with today?</div>
+
+    <div class="message right">I want to feel calmer.</div>
+
+    <div class="input-area">
+      <input type="text" placeholder="Type your message...">
+      <button>➤</button>
+    </div>
+  </div>
+
+</div>
+
+</body>
+</html>
